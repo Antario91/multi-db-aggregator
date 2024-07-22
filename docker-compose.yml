@@ -1,0 +1,48 @@
+# Use postgres/example user/password credentials
+version: '3.9'
+
+services:
+
+  aggregator:
+    image: my-username/multi-db-aggregate-users:0.0.1-snapshot
+    hostname: aggregator
+    ports:
+      - 8080:8080
+
+  dba:
+    image: postgres
+    hostname: postgresa
+    restart: always
+    # set shared memory limit when using docker-compose
+    shm_size: 128mb
+    environment:
+      POSTGRES_DB: app_db
+      POSTGRES_USER: app_user
+      POSTGRES_PASSWORD: password123
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgresa:/var/lib/postgresql/data
+      - ./initPostrgesA.sql:/docker-entrypoint-initdb.d/initPostrgesA.sql
+
+  dbb:
+    image: postgres
+    hostname: postgresb
+    restart: always
+    # set shared memory limit when using docker-compose
+    shm_size: 128mb
+    environment:
+      POSTGRES_DB: app_db
+      POSTGRES_USER: ken
+      POSTGRES_PASSWORD: block
+    ports:
+      - 5433:5432
+    volumes:
+        - ./postgresb:/var/lib/postgresql/data
+        - ./initPostrgesB.sql:/docker-entrypoint-initdb.d/initPostrgesB.sql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8000:8080

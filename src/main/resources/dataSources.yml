@@ -1,0 +1,26 @@
+version: '3.9'
+
+db:
+  dataSources:
+    - name: data-base-1
+      strategy: postgres
+      url: jdbc:postgresql://dba:5432/app_db
+      table: users
+      user: app_user
+      password: password123
+      mapping:
+        id: user_id
+        username: login
+        name: first_name
+        surname: last_name
+    - name: data-base-2
+      strategy: postgres
+      url: jdbc:postgresql://dbb:5432/app_db
+      table: user_table
+      user: ken
+      password: block
+      mapping:
+        id: ldap_login
+        username: ldap_login
+        name: name
+        surname: surname

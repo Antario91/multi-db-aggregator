@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: "multi-db-aggregator"
+  config:
+    import: "classpath:dataSources.yml"
